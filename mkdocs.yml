@@ -1,0 +1,61 @@
+site_name: HY Credit Screener — Field Reference
+site_description: Field-by-field documentation for the yfinance-based high-yield credit screener.
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle: { icon: material/weather-night, name: Switch to dark mode }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle: { icon: material/weather-sunny, name: Switch to light mode }
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.instant
+    - content.code.copy
+    - toc.integrate
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - pymdownx.highlight: { anchor_linenums: true }
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+nav:
+  - Home: index.md
+  - Concepts:
+      - The field contract: concepts/contract.md
+      - The engine: concepts/engine.md
+  - Statement inputs:
+      - Revenues: fields/revenues.md
+      - EBITDA: fields/ebitda.md
+      - Adjusted EBITDA: fields/adj_ebitda.md
+      - Capex: fields/capex.md
+      - Cash interest: fields/cash_interest.md
+      - Cash taxes: fields/cash_taxes.md
+      - Change in NWC: fields/ch_nwc.md
+      - Cash: fields/cash.md
+      - Total debt: fields/total_debt.md
+      - Total liabilities: fields/total_liabilities.md
+      - EBIT: fields/ebit.md
+  - Market:
+      - Equity market cap: fields/equity_cap.md
+      - Realized vol: fields/realized_vol.md
+      - Implied vol (parked): fields/implied_vol.md
+  - Derived cash flow:
+      - Effective tax rate: fields/tax_rate.md
+      - Unlevered FCF: fields/ufcf.md
+      - Free cash flow: fields/fcf.md
+      - UFCF volatility: fields/ufcf_vol.md
+  - Ratios:
+      - EBITDA / Adj EBITDA: fields/ebitda_to_adj_ebitda.md
+      - LTM / 2y-avg EBITDA: fields/ltm_vs_2y_avg_ebitda.md
+      - (EBITDA−Capex) / Interest: fields/ebitda_less_capex_to_interest.md
+      - Net debt / EBITDA: fields/net_debt_to_ebitda.md
+      - FCF / Net debt: fields/fcf_to_net_debt.md
+      - Net debt / EV: fields/net_debt_to_ev.md

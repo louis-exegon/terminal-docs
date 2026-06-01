@@ -40,8 +40,3 @@ nd = v['total_debt'] - v['cash']
 ev = v['equity_cap'] + nd
 ratio = nd / ev
 ```
-
-## Reconciliation (Ball)
-
-Ball latest ≈ **0.33**.
-

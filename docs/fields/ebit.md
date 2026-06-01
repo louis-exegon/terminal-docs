@@ -32,8 +32,3 @@ Reported at two points — **latest** (Σ of the last 4Q / 2H of `EBIT`) and **F
 ```python
 return resolve_field-style: TTM('EBIT')  else  TTM('EBITDA') - TTM('Reconciled Depreciation')
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM = **1,479**, FY2025 = **1,442**.
-

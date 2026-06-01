@@ -42,8 +42,3 @@ It is a **cash-flow** concept, not a balance-sheet level difference. Tier 3 uses
 q = quarterly_cash_flow['Change In Working Capital']
 return resolve_flow('ch_nwc', q, annual_equivalent)
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM ≈ **−395** (rolling 4Q), FY2025 = **−131**.
-

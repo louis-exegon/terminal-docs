@@ -38,8 +38,3 @@ If the direct line is missing, the balance-sheet identity (assets − equity) re
 ```python
 return resolve_field(api, 'total_liabilities')
 ```
-
-## Reconciliation (Ball)
-
-Ball latest = **14,151**.
-

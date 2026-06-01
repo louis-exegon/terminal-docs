@@ -38,8 +38,3 @@ Inherits `fcf`'s interest/tax proxies → `is_proxy=True`.
 ```python
 ratio = v['fcf'] / (v['total_debt'] - v['cash'])
 ```
-
-## Reconciliation (Ball)
-
-Ball latest ≈ **0.10**, FY2025 ≈ **0.17**.
-

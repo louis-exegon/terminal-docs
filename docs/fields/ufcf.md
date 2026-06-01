@@ -42,8 +42,3 @@ Computed at both points; `period_consistent` flags if the components' dates dive
 v = {k: get(k)['latest']['value'] for k in parts}
 ufcf = v['ebitda'] - v['ebit']*v['tax'] + v['capex'] + v['ch_nwc']
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM = **842.7**, FY2025 ≈ **1,152**.
-

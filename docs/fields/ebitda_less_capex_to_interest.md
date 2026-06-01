@@ -38,8 +38,3 @@ Inherits the `cash_interest` accrual proxy in the denominator, which amplifies t
 ```python
 m = (v['ebitda'] + v['capex']) / (-v['cash_interest'])
 ```
-
-## Reconciliation (Ball)
-
-Ball ≈ **4.8×**.
-

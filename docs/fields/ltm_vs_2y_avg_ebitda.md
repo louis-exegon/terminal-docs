@@ -42,8 +42,3 @@ ytd = Σ current-FY interim EBITDA up to latest date
 two_y_latest = (ytd + annual[fy-1] + ((ppy-n)/ppy)*annual[fy-2]) / 2
 two_y_fy     = mean(annual[-2:])
 ```
-
-## Reconciliation (Ball)
-
-Ball ≈ **1.2** (LTM running above the 2-year average).
-

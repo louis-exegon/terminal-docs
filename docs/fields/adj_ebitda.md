@@ -31,8 +31,3 @@ Reported at two points — **latest** (Σ of the last 4Q / 2H of `Normalized EBI
 ```python
 return resolve_field(api, 'adj_ebitda')
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM ≈ **2,086**, FY2025 = **2,042** (close to reported — few adjustments).
-

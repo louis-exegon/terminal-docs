@@ -39,8 +39,3 @@ Small samples (~4 annual points) let one anomalous year dominate, so the field a
 series = {yr: EBITDA - EBIT*tax - CapEx - dNWC for each fiscal year}
 value  = np.std(list(series.values()), ddof=1)
 ```
-
-## Reconciliation (Ball)
-
-Ball = **995.8** with `outlier_dominated=True`; series shows 2022 = **−1,095** (a growth-capex supercycle, not distress). Excluding it, std ≈ **466**.
-

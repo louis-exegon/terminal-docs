@@ -31,8 +31,3 @@ Reported at two points — **latest** (the newest interim balance-sheet snapshot
 ```python
 return resolve_field(api, 'cash')
 ```
-
-## Reconciliation (Ball)
-
-Ball latest ≈ **730**, FY2025 = **1,212**.
-

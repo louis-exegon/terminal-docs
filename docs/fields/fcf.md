@@ -42,8 +42,3 @@ parts = [get_ebitda, get_capex, get_ch_nwc, get_cash_interest, get_cash_taxes]
 latest = sum(p(api)['latest']['value']      for p in parts)
 fy     = sum(p(api)['fy_baseline']['value'] for p in parts)
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM ≈ **678** vs Bloomberg **735** (~8% under; component errors partly offset). Using Bloomberg's annual capex instead gives ≈758.
-

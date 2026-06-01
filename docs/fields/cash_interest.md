@@ -36,8 +36,3 @@ Reported at two points — **latest** (−Σ of the last 4Q / 2H of `Interest Ex
 ```python
 return resolve_field(api, 'cash_interest')   # sign=-1 applied in the registry
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM ≈ **−322**, FY2025 = **−314**.
-

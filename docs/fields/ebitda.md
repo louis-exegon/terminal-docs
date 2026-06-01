@@ -31,8 +31,3 @@ Reported at two points — **latest** (Σ of the last 4Q / 2H of `EBITDA`) and *
 ```python
 return resolve_field(api, 'ebitda')
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM ≈ **2,110**, FY2025 = **2,064**.
-

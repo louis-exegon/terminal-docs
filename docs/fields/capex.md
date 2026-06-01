@@ -36,8 +36,3 @@ If `Capital Expenditure Reported` is absent the generic `Capital Expenditure` li
 ```python
 return resolve_field(api, 'capex')
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM ≈ **−554**, FY2025 = **−474**.
-

@@ -39,8 +39,3 @@ Reported at two points — **latest** (levels at the newest balance-sheet date o
 nd = v['total_debt'] - v['cash']
 ratio = nd / v['ebitda']
 ```
-
-## Reconciliation (Ball)
-
-Ball latest ≈ **3.35×**, FY2025 ≈ **2.81×**.
-

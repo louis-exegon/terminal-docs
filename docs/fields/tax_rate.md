@@ -40,8 +40,3 @@ Unit is a decimal. Tier 3 (statutory) sets `is_proxy=True`. Final value clamped 
 r = TTM('Tax Provision') / TTM('Pretax Income')
 return clamp(r, 0, 0.40)
 ```
-
-## Reconciliation (Ball)
-
-Ball ≈ **0.215** (real effective rate).
-

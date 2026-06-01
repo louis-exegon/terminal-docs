@@ -38,8 +38,3 @@ Reported at two points — **latest** (−(TTM `Tax Provision` − TTM `Deferred
 prov = TTM('Tax Provision');  deferred = TTM('Deferred Tax')
 return -(prov - deferred)   # negated; current-tax proxy
 ```
-
-## Reconciliation (Ball)
-
-Ball LTM ≈ **−161**, FY2025 ≈ **−180**.
-

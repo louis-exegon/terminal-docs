@@ -25,9 +25,3 @@ Reported at two points — **latest** (ratio of each component's latest) and **F
 |---|---|---|---|
 | `ebitda` | `get_ebitda` | TTM | numerator |
 | `adj_ebitda` | `get_adj_ebitda` | TTM | denominator |
-
-
-## Reconciliation (Ball)
-
-Ball ≈ **1.01** (minimal adjustments).
-

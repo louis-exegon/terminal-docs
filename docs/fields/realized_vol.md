@@ -37,8 +37,3 @@ Unit is a decimal (0.26 = 26%). The FY value uses the calendar/fiscal-year windo
 lr = np.log(close / close.shift(1)).dropna()
 latest = lr.iloc[-252:].std() * np.sqrt(252)
 ```
-
-## Reconciliation (Ball)
-
-Ball ≈ **0.26** (≈26%).
-

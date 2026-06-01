@@ -7,7 +7,7 @@
     **Basis:** `market` &nbsp;·&nbsp; **Unit:** `decimal`
 
 
-One-year implied equity volatility — **parked**. Returns `None`.
+One-year implied equity volatility — **[TODO]**. Returns `None`.
 
 
 ## Formula
@@ -34,5 +34,5 @@ Yahoo's `impliedVolatility` is unreliable here (illiquid chains, solver bisectio
 ## Simplified logic
 
 ```python
-return {'latest': None, 'fy_baseline': None}   # parked
+return {'latest': None, 'fy_baseline': None}   # [TODO]
 ```

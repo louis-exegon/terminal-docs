@@ -36,8 +36,3 @@ Whether finance/operating leases are in or out, and which period to anchor on, i
 ```python
 return resolve_field(api, 'total_debt')
 ```
-
-## Reconciliation (Ball)
-
-Ball latest = **7,807**, FY2025 = **7,012**.
-

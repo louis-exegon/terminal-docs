@@ -7,35 +7,35 @@
     **Basis:** `derived` &nbsp;·&nbsp; **Unit:** `x`
 
 
-Headline leverage. A balance-sheet level numerator over a TTM flow denominator.
+Headline leverage multiple: how many years of EBITDA it would take to repay net debt. A balance-sheet numerator over a TTM flow denominator.
 
 
 ## Formula
 
 ```text
-net_debt_to_ebitda = (total_debt - cash) / ebitda
+net_debt_to_ebitda = (total_debt − cash) / ebitda
 ```
 
-Reported at two points — **latest** (levels at the newest balance-sheet date over TTM EBITDA) and **FY-baseline** (FY-end levels over annual EBITDA), each with its exact `as_of` date.
+Reported at two points — **latest** (balance-sheet levels at the most recent snapshot over TTM EBITDA) and **FY-baseline** (FY-end debt/cash levels over annual EBITDA), each with its exact `as_of` date.
 
 
 ## Inputs
 
-| input | source | transform | role / sign |
+| input | getter | transform | role |
 |---|---|---|---|
-| `total_debt` | `get_total_debt` | level | numerator |
-| `cash` | `get_cash` | level | numerator |
-| `ebitda` | `get_ebitda` | TTM | denominator |
+| `total_debt` | `get_total_debt` | level (latest balance-sheet snapshot) | numerator + |
+| `cash` | `get_cash` | level (latest balance-sheet snapshot) | numerator − |
+| `ebitda` | `get_ebitda` | TTM (multi-tier: yf headline → first principles) | denominator |
 
 
 ## Caveats & proxies
 
-`period_consistent` flags when the level date (balance sheet) and the TTM date (latest interim) differ.
+`period_consistent` flags when the balance-sheet date (debt/cash) and the TTM date (EBITDA) differ — the typical case for the `latest` point.
 
 
 ## Simplified logic
 
 ```python
-nd = v['total_debt'] - v['cash']
-ratio = nd / v['ebitda']
+nd    = v['total_debt'] - v['cash']
+ratio = nd / v['ebitda'] if v['ebitda'] else None
 ```

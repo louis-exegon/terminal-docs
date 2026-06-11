@@ -62,6 +62,7 @@ nav:
           - 1-yr Realized Equity Vol: fields/realized_vol.md
       - Financial Metrics:
           - Equity market cap: fields/equity_cap.md
+          - Enterprise value: fields/enterprise_value.md
           - Net debt / EBITDA: fields/net_debt_to_ebitda.md
           - FCF / Net debt: fields/fcf_to_net_debt.md
           - Net debt / EV: fields/net_debt_to_ev.md

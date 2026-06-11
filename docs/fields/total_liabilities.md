@@ -7,34 +7,42 @@
     **Basis:** `level` &nbsp;·&nbsp; **Unit:** `mm`
 
 
-Total liabilities ex-minority-interest — the structural model's `TOTAL_LIABILITIES`. A balance-sheet level.
+Total liabilities ex-minority-interest — the structural model's `TOTAL_LIABILITIES` input. A balance-sheet level taken at the latest snapshot. Primary is the direct line; the balance-sheet identity is the fallback.
 
 
 ## Formula
 
 ```text
-total_liabilities = balance_sheet['Total Liabilities Net Minority Interest']
-fallback:           Total Assets - Total Equity Gross Minority Interest
+Primary (direct line present):
+  total_liabilities = balance_sheet['Total Liabilities Net Minority Interest']
+
+Fallback (direct line absent):
+  total_liabilities = balance_sheet['Total Assets']
+                    − balance_sheet['Total Equity Gross Minority Interest']
 ```
 
-Reported at two points — **latest** (the newest interim snapshot) and **FY-baseline** (the FY-end snapshot), each with its exact `as_of` date.
+Reported at two points — **latest** (the newest interim balance-sheet snapshot) and **FY-baseline** (the FY-end snapshot), each with its exact `as_of` date.
 
 
 ## Inputs
 
-| input | source | transform | role / sign |
+| input | source | transform | priority |
 |---|---|---|---|
-| `Total Liabilities Net Minority Interest` | `balance_sheet` | level | + |
-| `Total Assets − Total Equity (fallback)` | `balance_sheet` | identity, same point-in-time | + |
+| `Total Liabilities Net Minority Interest` | `quarterly_balance_sheet` / `balance_sheet` | level (latest snapshot) | **primary** |
+| `Total Assets` | `quarterly_balance_sheet` / `balance_sheet` | level | fallback — subtracted |
+| `Total Equity Gross Minority Interest` | `quarterly_balance_sheet` / `balance_sheet` | level | fallback — balance-sheet identity |
 
-
-## Caveats & proxies
-
-If the direct line is missing, the balance-sheet identity (assets − equity) reproduces liabilities net of MI.
+The primary is used as long as the direct line is non-empty in either the quarterly or annual frame. The fallback activates only when it is absent entirely, and produces the mathematically equivalent result: Assets − Equity ≡ Liabilities.
 
 
 ## Simplified logic
 
 ```python
-return resolve_field(api, 'total_liabilities')
+q = quarterly_balance_sheet['Total Liabilities Net Minority Interest']
+a = balance_sheet['Total Liabilities Net Minority Interest']
+if q or a non-empty:
+    latest = (q or a).iloc[-1]          # primary
+else:
+    # identity fallback
+    latest = Total_Assets - Total_Equity_Gross_Minority_Interest
 ```

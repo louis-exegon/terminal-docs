@@ -1,44 +1,68 @@
-# Free Cash Flow
+# Free Cash Flow (Levered)
 
 `fcf`
 
 !!! info "At a glance"
 
-    **Basis:** `derived` &nbsp;·&nbsp; **Unit:** `mm` &nbsp;·&nbsp; **Proxy:** ⚠️ yes
+    **Basis:** `derived` &nbsp;·&nbsp; **Unit:** `mm` &nbsp;·&nbsp; **Proxy:** ⚠️ conditional
 
 
-Levered free cash flow — cash after capex, working-capital swings, and the cash cost of interest and tax. Computed from components (Excel `Y6 = SUM(S6:X6)`), **not** Yahoo's opaque `Free Cash Flow` line.
+Levered free cash flow — cash after capex, working-capital swings, and the cash cost of interest and tax. Built from components; two cross-check variants are surfaced alongside.
+
+!!! warning "Sign convention change"
+    `cash_interest` and `cash_taxes` are now **positive magnitudes** (cash paid out). The FCF formula **subtracts** them — not adds.
 
 
 ## Formula
 
 ```text
-fcf = ebitda + capex + ch_nwc + cash_interest + cash_taxes   (all cash-signed → straight sum)
+fcf = ebitda + capex + ch_nwc − cash_interest − cash_taxes
 ```
 
-Reported at two points — **latest** (each component at its **latest** TTM value) and **FY-baseline** (each component at its **FY-start** value), each with its exact `as_of` date.
+| term | value | sign | contribution |
+|---|---|---|---|
+| `ebitda` | positive | + | cash earnings |
+| `capex` | **negative** (Yahoo convention) | + (adding a negative) | reduces FCF |
+| `ch_nwc` | cash-signed (negative = outflow) | + | reduces FCF if NWC grew |
+| `cash_interest` | **positive magnitude** (cash paid) | − | reduces FCF |
+| `cash_taxes` | **positive magnitude** (cash paid) | − | reduces FCF |
+
+Reported at two points — **latest** (each component at its `latest` value) and **FY-baseline** (each component at its `fy_baseline` value), each with its exact `as_of` date.
 
 
 ## Inputs
 
-| input | source | transform | role / sign |
+| input | getter | transform | role / sign in formula |
 |---|---|---|---|
-| `ebitda` | `get_ebitda` | TTM | + |
-| `capex` | `get_capex` | TTM, negative | − |
-| `ch_nwc` | `get_ch_nwc` | TTM, cash-signed | ± |
-| `cash_interest` | `get_cash_interest` | TTM, negated (proxy) | − |
-| `cash_taxes` | `get_cash_taxes` | TTM current-tax (proxy) | − |
+| `ebitda` | `get_ebitda` | TTM (multi-tier) | + |
+| `capex` | `get_capex` | TTM, **negative** | + (already negative) |
+| `ch_nwc` | `get_ch_nwc` | TTM, cash-signed | + (negative if NWC grew) |
+| `cash_interest` | `get_cash_interest` | TTM, **positive magnitude** (multi-tier: cash → SEC → accrual) | − (subtracted) |
+| `cash_taxes` | `get_cash_taxes` | TTM, **positive magnitude** (multi-tier: cash → SEC) | − (subtracted) |
+
+
+## Variants (in order of preference)
+
+All three are computed and exposed in `variants`:
+
+| # | label | formula |
+|---|---|---|
+| 1 | components (EBITDA+capex+ΔNWC−int−tax) | `ebitda + capex + ch_nwc − cash_interest − cash_taxes` — **primary** |
+| 2 | yfinance Free Cash Flow (direct) | `TTM cash_flow['Free Cash Flow']` |
+| 3 | Operating CF − capex | `TTM Operating Cash Flow + capex` (capex negative) |
+
+Variant 1 is the primary (our build). Variants 2 and 3 are cross-checks; they do not drive the output.
 
 
 ## Caveats & proxies
 
-`cash_interest` and `cash_taxes` are accrual proxies, so `fcf` carries `is_proxy=True`.
+`is_proxy` is inherited from the components. When `cash_interest` falls back to the accrual proxy (Tier 3 of its own ladder) or `cash_taxes` is unavailable, `fcf` inherits `is_proxy=True`.
 
 
 ## Simplified logic
 
 ```python
-parts = [get_ebitda, get_capex, get_ch_nwc, get_cash_interest, get_cash_taxes]
-latest = sum(p(api)['latest']['value']      for p in parts)
-fy     = sum(p(api)['fy_baseline']['value'] for p in parts)
+v = {k: getter(api)['latest']['value'] for k in parts}
+fcf = v['ebitda'] + v['capex'] + v['ch_nwc'] - v['cash_interest'] - v['cash_taxes']
+# same formula applied to fy_baseline values
 ```

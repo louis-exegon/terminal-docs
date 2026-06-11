@@ -7,27 +7,38 @@
     **Basis:** `level` &nbsp;·&nbsp; **Unit:** `mm`
 
 
-Cash, equivalents and short-term investments — a **balance-sheet level**, taken at the latest snapshot (not summed).
+Cash, equivalents and short-term investments — a **balance-sheet level** at the latest snapshot. Two variants are computed and surfaced; the broader definition (cash + short-term investments) is primary.
 
 
 ## Formula
 
 ```text
-cash = balance_sheet['Cash Cash Equivalents And Short Term Investments']   (fallback 'Cash And Cash Equivalents')
+Variant 1 (primary):  cash = balance_sheet['Cash Cash Equivalents And Short Term Investments']
+Variant 2:            cash = balance_sheet['Cash And Cash Equivalents']
 ```
 
-Reported at two points — **latest** (the newest interim balance-sheet snapshot) and **FY-baseline** (the FY-end snapshot), each with its exact `as_of` date.
+Reported at two points — **latest** (the newest interim balance-sheet snapshot) and **FY-baseline** (the FY-end snapshot), each with its exact `as_of` date. Levels are **not** summed; only the most recent snapshot is used.
 
 
-## Inputs
+## Inputs & variants (in order of preference)
 
-| input | source | transform | role / sign |
+| # | label | source field | notes |
 |---|---|---|---|
-| `Cash line` | `balance_sheet['Cash Cash Equivalents And Short Term Investments']` | level (latest snapshot) | + |
+| 1 | Cash + ST investments | `balance_sheet['Cash Cash Equivalents And Short Term Investments']` | **primary** — broader definition, includes money-market and short-term securities |
+| 2 | Cash & equivalents only | `balance_sheet['Cash And Cash Equivalents']` | narrower; excludes short-term investments |
+
+The primary drives `latest` and `fy_baseline`. Both variants are exposed for audit.
 
 
 ## Simplified logic
 
 ```python
-return resolve_field(api, 'cash')
+q_broad = quarterly_balance_sheet['Cash Cash Equivalents And Short Term Investments']
+a_broad = balance_sheet['Cash Cash Equivalents And Short Term Investments']
+q_narrow = quarterly_balance_sheet['Cash And Cash Equivalents']
+a_narrow = balance_sheet['Cash And Cash Equivalents']
+
+# Primary: use the most recent snapshot from the broad line
+latest = (q_broad or a_broad).iloc[-1]
+fy_baseline = a_broad.iloc[-1]
 ```
